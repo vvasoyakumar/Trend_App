@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "885782028675",
+    "project_id": "trendradar-7ad93",
+    "storage_bucket": "trendradar-7ad93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885782028675:android:44c5ae6444baf64f9a56b6",
+        "android_client_info": {
+          "package_name": "com.trendradar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3DCA1mVPquyw-ToOTLKKYLPP-bSkI5Dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

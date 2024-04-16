@@ -1,0 +1,311 @@
+openapi: 3.0.0
+info:
+  title: Video API
+  description: RESTful API to fetch videos based on different criteria
+  version: 1.0.0
+servers:
+  - url: 'https://hl29p2mpsj.execute-api.eu-central-1.amazonaws.com'
+paths:
+  /videos:
+    get:
+      summary: Get videos based on categories and optional search term
+      parameters:
+        - name: categories
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              example: [5, 4]
+        - name: searchterm
+          in: query
+          description: Search term to filter videos by username or description
+          schema:
+            type: string
+            example: "mrbeast"
+        - name: pageSize
+          in: query
+          required: true
+          schema:
+            type: integer
+            maximum: 20
+            example: 10
+        - name: pageNumber
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Video'
+  /videos/{videoId}/detail:
+    get:
+      summary: Get video statistics based on videoId
+      parameters:
+        - name: videoId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "1234567890"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoDetails'
+components:
+  schemas:
+    Video:
+      type: object
+      properties:
+        videoId:
+          type: string
+          example: "1234567890"
+        Username:
+          type: string
+          example: "@mrbeast"
+        AvatarImage:
+          type: string
+          example: "https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/54435a1ec165931f60f2a3872de74aa5~c5_1080x1080.jpeg"
+        Follower:
+          type: integer
+          format: int64
+          example: 5000
+        Likes:
+          type: integer
+          format: int64
+          example: 1000
+        Category:
+          type: array
+          items:
+            type: integer
+          example: [5, 4]
+        Date-posted:
+          type: string
+          example: "2023-07-14 19:34:12"
+        Hotness:
+          type: integer
+          example: 7
+        Views:
+          type: integer
+          format: int64
+          example: 15000
+        Favorites:
+          type: integer
+          format: int64
+          example: 750
+        PublicVideoURL:
+          type: string
+          example: "https://www.tiktok.com/@mrbeast/video/1234567890"
+        SourceVideoURL:
+          type: string
+          example: "https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/play/?video_id=v12044gd0000ck9h13jc77u0oqq80h2g&line=0&is_play_url=1&source=PackSourceEnum_PUBLISH&file_id=0248debd8ff24f2595faec7e4e00f22d&item_id=7283184299313024299&signv3=dmlkZW9faWQ7ZmlsZV9pZDtpdGVtX2lkLjdiZDE2Yzc4MWI3M2ZlOWE3ZmE0OWNlZmQ0NDhiNDlj"
+        SongTitle:
+          type: string
+          example: "original sound - MrBeast"
+        SongUrl:
+          type: string
+          format: uri
+          example: "https://sf16-ies-music-va.tiktokcdn.com/obj/ies-music-ttp-dup-us/7270193297379887914.mp3"
+        Hashtags:
+          type: array
+          items:
+            type: string
+            example: ["asmr", "metalpipe", "schoolbus", "mysteryvan"]
+        Description:
+          type: string
+          example: "I think we broke the School Bus 😳 #asmr #metalpipe #schoolbus #mysteryvan  METAL PIPE VS SCHOOL BUS!!! What else should we drop metal pipes on? 🤔 "
+    DataTimeStamp:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        viewCount:
+          type: integer
+          format: int64
+    VideoDetails:
+      type: object
+      properties:
+        video:
+          $ref: '#/components/schemas/Video'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataTimeStamp'
+          example:
+            - timestamp: "2023-07-14T19:34:12Z"
+              viewCount: 15000
+            - timestamp: "2023-07-14T20:34:12Z"
+              viewCount: 15500
+            - timestamp: "2023-07-15T19:34:12Z"
+              viewCount: 17500
+            - timestamp: "2023-07-16T19:34:12Z"
+              viewCount: 19500
+
+
+#  First Original yaml
+#openapi: 3.0.0
+#info:
+#  title: Video API
+#  description: RESTful API to fetch videos based on different criteria
+#  version: 1.0.0
+#servers:
+#  - url: 'https://hl29p2mpsj.execute-api.eu-central-1.amazonaws.com'
+#paths:
+#  /videos:
+#    get:
+#      summary: Get videos based on categories and optional search term
+#      parameters:
+#        - name: categories
+#          in: query
+#          required: true
+#          schema:
+#            type: array
+#            items:
+#              type: integer
+#              example: [5, 4]
+#        - name: searchterm
+#          in: query
+#          description: Search term to filter videos by username or description
+#          schema:
+#            type: string
+#            example: "mrbeast"
+#        - name: pageSize
+#          in: query
+#          required: true
+#          schema:
+#            type: integer
+#            maximum: 20
+#            example: 10
+#        - name: pageNumber
+#          in: query
+#          required: true
+#          schema:
+#            type: integer
+#            example: 1
+#      responses:
+#        '200':
+#          description: Successful response
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  $ref: '#/components/schemas/Video'
+#  /videos/{videoId}/detail:
+#    get:
+#      summary: Get video statistics based on videoId
+#      parameters:
+#        - name: videoId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#            example: "1234567890"
+#      responses:
+#        '200':
+#          description: Successful response
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/VideoDetails'
+#components:
+#  schemas:
+#    Video:
+#      type: object
+#      properties:
+#        videoId:
+#          type: string
+#          example: "1234567890"
+#        Username:
+#          type: string
+#          example: "@mrbeast"
+#        AvatarImage:
+#          type: string
+#          example: "https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/54435a1ec165931f60f2a3872de74aa5~c5_1080x1080.jpeg"
+#        Follower:
+#          type: integer
+#          format: int64
+#          example: 5000
+#        Likes:
+#          type: integer
+#          format: int64
+#          example: 1000
+#        Category:
+#          type: array
+#          items:
+#            type: integer
+#          example: [5, 4]
+#        Date-posted:
+#          type: string
+#          example: "2023-07-14 19:34:12"
+#        Hotness:
+#          type: integer
+#          example: 7
+#        Views:
+#          type: integer
+#          format: int64
+#          example: 15000
+#        Favorites:
+#          type: integer
+#          format: int64
+#          example: 750
+#        PublicVideoURL:
+#          type: string
+#          example: "https://www.tiktok.com/@mrbeast/video/1234567890"
+#        SourceVideoURL:
+#          type: string
+#          example: "https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/play/?video_id=v12044gd0000ck9h13jc77u0oqq80h2g&line=0&is_play_url=1&source=PackSourceEnum_PUBLISH&file_id=0248debd8ff24f2595faec7e4e00f22d&item_id=7283184299313024299&signv3=dmlkZW9faWQ7ZmlsZV9pZDtpdGVtX2lkLjdiZDE2Yzc4MWI3M2ZlOWE3ZmE0OWNlZmQ0NDhiNDlj"
+#        SongTitle:
+#          type: string
+#          example: "original sound - MrBeast"
+#        SongUrl:
+#          type: string
+#          format: uri
+#          example: "https://sf16-ies-music-va.tiktokcdn.com/obj/ies-music-ttp-dup-us/7270193297379887914.mp3"
+#        Hashtags:
+#          type: array
+#          items:
+#            type: string
+#            example: ["asmr", "metalpipe", "schoolbus", "mysteryvan"]
+#        Description:
+#          type: string
+#          example: "I think we broke the School Bus 😳 #asmr #metalpipe #schoolbus #mysteryvan  METAL PIPE VS SCHOOL BUS!!! What else should we drop metal pipes on? 🤔 "
+#    DataTimeStamp:
+#      type: object
+#      properties:
+#        timestamp:
+#          type: string
+#          format: date-time
+#        viewCount:
+#          type: integer
+#          format: int64
+#    VideoDetails:
+#      type: object
+#      properties:
+#        video:
+#          $ref: '#/components/schemas/Video'
+#        stats:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/DataTimeStamp'
+#          example:
+#            - timestamp: "2023-07-14T19:34:12Z"
+#              viewCount: 15000
+#            - timestamp: "2023-07-14T20:34:12Z"
+#              viewCount: 15500
+#            - timestamp: "2023-07-15T19:34:12Z"
+#              viewCount: 17500
+#            - timestamp: "2023-07-16T19:34:12Z"
+#              viewCount: 19500
